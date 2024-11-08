@@ -1,0 +1,37 @@
+from helpers import NotValidEmailError, NotValidPhoneNumberError
+
+
+class Field:
+    def __init__(self, value):
+        self.value = value
+
+    def __str__(self):
+        return str(self.value)
+
+
+class Phone(Field):
+    PHONE_NUMBER_REGEX = r"\d{10}"
+
+    def __init__(self, value: str):
+        if not Phone.is_valid(value):
+            raise NotValidPhoneNumberError()
+
+        super().__init__(value)
+
+    @staticmethod
+    def is_valid(value):
+        return re.fullmatch(Phone.PHONE_NUMBER_REGEX, value) is not None
+    
+
+class Email(Field):
+    EMAIL_REGEX = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+
+    def __init__(self, value):
+        if not Email.is_valid(value):
+            raise NotValidEmailError()
+
+        super().__init__(value)
+
+    @staticmethod
+    def is_valid(value):
+        return re.match(Email.EMAIL_REGEX, value) is not None
