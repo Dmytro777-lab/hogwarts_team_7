@@ -2,6 +2,14 @@ from prompt_toolkit.document import Document
 from questionary import Validator, ValidationError 
 from users import Phone, Email
 
+class RequiredValidator(Validator):
+    def validate(self, document: Document):
+        if not document.text.strip():
+            raise ValidationError(
+                message="Please enter a value",
+                cursor_position=len(document.text),
+            )
+        
 class PhoneValidator(Validator):
     def validate(self, document: Document):
         if document.text and not Phone.is_valid(document.text):
