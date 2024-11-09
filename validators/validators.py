@@ -3,6 +3,14 @@ from questionary import Validator, ValidationError
 from users import Phone, Email
 import re
 
+class RequiredValidator(Validator):
+    def validate(self, document: Document):
+        if not document.text.strip():
+            raise ValidationError(
+                message="Please enter a value",
+                cursor_position=len(document.text),
+            )
+        
 class PhoneValidator(Validator):
     def validate(self, document: Document):
         phone_number = document.text.strip()
