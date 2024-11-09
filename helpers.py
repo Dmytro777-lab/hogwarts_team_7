@@ -1,25 +1,37 @@
 class NotValidPhoneNumberError(Exception):
     def __init__(self, message="Phone number must be 10 digits."):
+        super().__init__(message)
         self.message = message
-        super().__init__(self.message)
+
+    def __str__(self):
+        return f"NotValidPhoneNumberError: {self.message}"
 
 
 class NotValidEmailError(Exception):
-    def __init__(self, message="Please enter a valid email, e.g. example@example.com"):
+    def __init__(self, message="Please enter a valid email, e.g., example@example.com"):
+        super().__init__(message)
         self.message = message
-        super().__init__(self.message)
+
+    def __str__(self):
+        return f"NotValidEmailError: {self.message}"
 
 
-class NotValidBirhdayError(Exception):
+class NotValidBirthdayError(Exception):
     def __init__(self, message="Please enter a valid date in DD.MM.YY format, and it cannot be in the future"):
+        super().__init__(message)
         self.message = message
-        super().__init__(self.message)
+
+    def __str__(self):
+        return f"NotValidBirthdayError: {self.message}"
 
 
 class ContactsError(Exception):
     def __init__(self, message="Contact doesn't exist"):
+        super().__init__(message)
         self.message = message
-        super().__init__(self.message)
+
+    def __str__(self):
+        return f"ContactsError: {self.message}"
 
 
 class NotesError(Exception):

@@ -7,7 +7,7 @@ class PhoneValidator(Validator):
     def validate(self, document: Document):
         phone_number = document.text.strip()
         
-        # Checking for empty strin
+        # Checking for empty string
         if not phone_number:
             raise ValidationError(
                 message="Phone number cannot be empty",
