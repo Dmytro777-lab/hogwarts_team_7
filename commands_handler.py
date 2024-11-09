@@ -10,14 +10,14 @@ class Commands(Enum):
     CLOSE = "close"
     HELLO = "hello"
 
-    # Member management commands
-    ADD_MEMBER = "member:add"
-    SHOW_MEMBER = "member:show"
-    ALL_MEMBERS = "member:all"
-    BIRTHDAYS = "member:birthdays"
-    UPDATE_MEMBER = "member:update"
-    DELETE_MEMBER = "member:delete"
-    SEARCH_MEMBERS = "member:search"
+    # Pupils management commands
+    ADD_PUPIL = "pupil:add"
+    SHOW_PUPIL = "pupil:show"
+    ALL_PUPILS = "pupil:all"
+    BIRTHDAYS = "pupil:birthdays"
+    UPDATE_PUPIL = "pupil:update"
+    DELETE_PUPIL = "pupil:delete"
+    SEARCH_PUPILS = "pupil:search"
 
     # Note management commands
     ADD_NOTE = "note:add"

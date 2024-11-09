@@ -1,6 +1,6 @@
 from prompt_toolkit.document import Document
 from questionary import Validator, ValidationError
-from users import Phone, Email
+from users import Phone, Email, Birthday
 import re
 
 class RequiredValidator(Validator):
@@ -10,6 +10,15 @@ class RequiredValidator(Validator):
                 message="Please enter a value",
                 cursor_position=len(document.text),
             )
+        
+class NumberValidation(Validator):
+    def validate(self, document: Document):
+        if not document.text.isnumeric():
+            raise ValidationError(
+                message="Invalid input. Please enter a valid integer.",
+                cursor_position=len(document.text),
+            )
+
         
 class PhoneValidator(Validator):
     def validate(self, document: Document):
@@ -53,4 +62,12 @@ class EmailValidator(Validator):
             raise ValidationError(
                 message="Please enter a valid email, e.g., example@example.com",
                 cursor_position=len(email),
+            )
+        
+class DateValidator(Validator):
+    def validate(self, document: Document):
+        if document.text and not Birthday.is_valid(document.text):
+            raise ValidationError(
+                message="Please enter a valid date in DD.MM.YY format, and it cannot be in the future",
+                cursor_position=len(document.text),
             )
