@@ -1,5 +1,6 @@
 from collections import UserDict
-from notes.note import NoteRecord
+from .note import NoteRecord
+
 
 class Notes(UserDict):
     def add_record(self, record: NoteRecord):
@@ -11,6 +12,6 @@ class Notes(UserDict):
     def delete(self, title: str):
         if title in self.data:
             del self.data[title]
-    
+
     def is_empty(self) -> bool:
         return not bool(self.data)

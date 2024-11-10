@@ -2,8 +2,10 @@ import questionary
 from colorama import Fore, Style
 
 import validators
-from helpers import input_error, NotesError 
-from notes import Notes, NoteRecord, SearchBy
+from helpers import input_error, NotesError
+from hogwarts_notes import Notes, NoteRecord
+from hogwarts_notes.search import SearchBy
+
 
 @input_error
 def add_note(notes_list: Notes):
@@ -23,15 +25,14 @@ def add_note(notes_list: Notes):
             break
 
     content = questionary.text(
-        "What is the content for your note?", validate=validators.validators.RequiredValidator
+        "What is the content for your note?",
+        validate=validators.validators.RequiredValidator,
     ).ask()
 
     record = NoteRecord(title, content)
     notes_list.add_record(record)
 
-    return (
-        Fore.GREEN + f"Note titled '{title}' is added." + Style.RESET_ALL
-    )
+    return Fore.GREEN + f"Note titled '{title}' is added." + Style.RESET_ALL
 
 
 @input_error
@@ -49,25 +50,17 @@ def delete_note(notes_list: Notes):
 
     if not record:
         return NotesError(
-            Fore.RED
-            + f"Note titled '{title}'is not found."
-            + Style.RESET_ALL
+            Fore.RED + f"Note titled '{title}'is not found." + Style.RESET_ALL
         )
 
     notes_list.delete(title)
-    return (
-        Fore.RED
-        + f"Note titled '{title}' has been deleted."
-        + Style.RESET_ALL
-    )
+    return Fore.RED + f"Note titled '{title}' has been deleted." + Style.RESET_ALL
 
 
 @input_error
 def update_note(notes_list: Notes):
     if notes_list.is_empty():
-        raise NotesError(
-            Fore.RED + "There are no notes." + Style.RESET_ALL
-        )
+        raise NotesError(Fore.RED + "There are no notes." + Style.RESET_ALL)
 
     title = questionary.autocomplete(
         "What is the title of the note you wish to update?",
@@ -78,9 +71,7 @@ def update_note(notes_list: Notes):
 
     if not record:
         return NotesError(
-            Fore.RED
-            + f"Note titled '{title}' is not found."
-            + Style.RESET_ALL
+            Fore.RED + f"Note titled '{title}' is not found." + Style.RESET_ALL
         )
 
     new_title = questionary.text(
@@ -97,19 +88,13 @@ def update_note(notes_list: Notes):
 
     record.note.edit(new_title, new_content)
 
-    return (
-        Fore.GREEN
-        + f"Note titled '{title}' has been updated."
-        + Style.RESET_ALL
-    )
+    return Fore.GREEN + f"Note titled '{title}' has been updated." + Style.RESET_ALL
 
 
 @input_error
 def search_notes(notes_list: Notes):
     if notes_list.is_empty():
-        raise NotesError(
-            Fore.RED + "There are no notes." + Style.RESET_ALL
-        )
+        raise NotesError(Fore.RED + "There are no notes." + Style.RESET_ALL)
     search_by = questionary.select(
         "Please specify a search type:",
         choices=[search.value for search in SearchBy],
@@ -125,12 +110,9 @@ def search_notes(notes_list: Notes):
         return notes_list.list_notes(query)
 
 
-
 @input_error
 def show_notes(notes_list: Notes):
     if notes_list.is_empty():
-        raise NotesError(
-            Fore.RED + "There are no notes." + Style.RESET_ALL
-        )
+        raise NotesError(Fore.RED + "There are no notes." + Style.RESET_ALL)
 
     return notes_list.list_notes()

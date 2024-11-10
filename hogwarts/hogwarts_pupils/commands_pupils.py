@@ -3,7 +3,7 @@ from tabulate import tabulate
 from colorama import Fore, Style, init
 
 import validators
-from users.users import Users, User
+from .hogwarts_pupils import Pupils, Pupil
 from helpers import ContactsError, input_error
 import validators.ask_name
 
@@ -11,7 +11,7 @@ init()
 
 
 @input_error
-def add_pupil(list: Users):
+def add_pupil(list: Pupils):
     name = questionary.text(
         "Enter the name of the pupil:",
         validate=validators.validators.RequiredValidator,
@@ -29,12 +29,10 @@ def add_pupil(list: Users):
             )
         else:
             return (
-                Fore.LIGHTRED_EX
-                + "The addition of the pupil failed."
-                + Style.RESET_ALL
+                Fore.LIGHTRED_EX + "The addition of the pupil failed." + Style.RESET_ALL
             )
 
-    contact = contact or User(name)
+    contact = contact or Pupil(name)
     list.add_record(contact)
     form = questionary.form(
         address=questionary.text("[Optional] Enter address:"),
@@ -61,14 +59,14 @@ def add_pupil(list: Users):
 
 
 @input_error
-def update_pupil(list: Users) -> str:
+def update_pupil(list: Pupils) -> str:
     name = validators.ask_name.ask_contact_name(list)
     record = list.find(name)
     if record is None:
         raise ContactsError(Fore.RED + "This pupil does not exist." + Style.RESET_ALL)
 
     field = questionary.autocomplete(
-        "Which detail would you like to update?", choices=User.get_fields()
+        "Which detail would you like to update?", choices=Pupil.get_fields()
     ).ask()
     if hasattr(record, field):
         new_value = questionary.text(
@@ -91,7 +89,7 @@ def update_pupil(list: Users) -> str:
 
 
 @input_error
-def delete_pupil(list: Users) -> str:
+def delete_pupil(list: Pupils) -> str:
     name = validators.ask_name.ask_contact_name(list)
     record = list.find(name)
 
@@ -104,7 +102,7 @@ def delete_pupil(list: Users) -> str:
 
 
 @input_error
-def show_pupil(pupils_list: Users) -> str:
+def show_pupil(pupils_list: Pupils) -> str:
     name = questionary.autocomplete(
         "Enter the name of the pupil to view:", choices=[*pupils_list.keys()]
     ).ask()
@@ -119,7 +117,7 @@ def show_pupil(pupils_list: Users) -> str:
 
 
 @input_error
-def all_pupils(pupils_list: Users) -> str:
+def all_pupils(pupils_list: Pupils) -> str:
     if not pupils_list:
         raise ContactsError(
             Fore.RED + "The list is empty! No pupils found." + Style.RESET_ALL
@@ -164,7 +162,7 @@ def all_pupils(pupils_list: Users) -> str:
 
 
 @input_error
-def pupils_birthdays(list: Users) -> str:
+def pupils_birthdays(list: Pupils) -> str:
     if not list:
         raise ContactsError(
             Fore.RED + "The list is empty! No pupils found." + Style.RESET_ALL
@@ -209,7 +207,7 @@ def pupils_birthdays(list: Users) -> str:
 
 
 @input_error
-def search_pupil(list: Users) -> str:
+def search_pupil(list: Pupils) -> str:
     if not list:
         raise ContactsError(
             Fore.RED + "The list is empty! No pupils found." + Style.RESET_ALL

@@ -2,9 +2,14 @@ import re
 from datetime import datetime, timedelta, date
 from dataclasses import dataclass
 from collections import UserDict
-from helpers import NotValidEmailError, NotValidPhoneNumberError, NotValidBirthdayError
+from helpers import (
+    NotValidEmailError,
+    NotValidPhoneNumberError,
+    NotValidBirthdayError,
+)
 from typing import Optional
 from colorama import Fore, Style
+
 
 class Field:
     def __init__(self, value):
@@ -12,12 +17,15 @@ class Field:
 
     def __str__(self):
         return str(self.value)
-    
+
+
 class Name(Field):
     pass
 
+
 class Address(Field):
     pass
+
 
 class Phone(Field):
     # Using a compiled regular expression to improve performance
@@ -32,7 +40,7 @@ class Phone(Field):
     def is_valid(value):
         # Using a compiled regular expression
         return Phone.PHONE_NUMBER_REGEX.fullmatch(value) is not None
-    
+
 
 class Email(Field):
     # Using a compiled regular expression for email
@@ -47,7 +55,8 @@ class Email(Field):
     def is_valid(value):
         # Using a compiled regular expression
         return Email.EMAIL_REGEX.fullmatch(value) is not None
-    
+
+
 class Birthday(Field):
     format = "%d.%m.%Y"
 
@@ -69,10 +78,10 @@ class Birthday(Field):
         except ValueError:
             # If the date is invalid, strptime will raise a ValueError
             return False
-        
+
 
 @dataclass
-class User:
+class Pupil:
     __address: Address = None
     __email: Email = None
     __birthday: Birthday = None
@@ -141,12 +150,12 @@ class User:
             Birthday: {self.birthday}"""
 
 
-class Users(UserDict[str, User]):
+class Pupils(UserDict[str, Pupil]):
 
-    def add_record(self, record: User):
+    def add_record(self, record: Pupil):
         self.data[record.name.value] = record
 
-    def find(self, name: str) -> User:
+    def find(self, name: str) -> Pupil:
         return self.data.get(name)
 
     def search_pupils(self, term: str):
@@ -158,7 +167,7 @@ class Users(UserDict[str, User]):
             highlighted_record = ""
             match_found = False
 
-            for field in User.get_fields():
+            for field in Pupil.get_fields():
                 value = getattr(record, field, None)
                 if value is not None:
                     field_value_str = str(value)
@@ -184,9 +193,7 @@ class Users(UserDict[str, User]):
         return (
             prefix + "\n".join(results)
             if results
-            else Fore.RED
-            + "No match found."
-            + Style.RESET_ALL
+            else Fore.RED + "No match found." + Style.RESET_ALL
         )
 
     def delete(self, name: str):
