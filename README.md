@@ -15,3 +15,9 @@ Command | Description
 `help` | Display the list of available commands.
 `close`| Close the application.
 `hello`| Greet the assistant.
+
+| Таблицы      |        Это         | Круто |
+| ------------ | :----------------: | ----: |
+| столбец 3    |  выровнен вправо   | $1600 |
+| столбец 2    | выровнен по центру |   $12 |
+| зебра-строки |     прикольные     |    $1 |
