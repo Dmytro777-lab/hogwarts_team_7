@@ -150,7 +150,7 @@ def all_pupils(pupils_list: Pupils) -> str:
             birthday = Fore.GREEN + birthday.strftime("%d/%m/%Y") + Style.RESET_ALL
         table_data.append([name, phone, email, address, birthday])
         headers = [
-            Fore.LIGHTYELLOW_EX + "Name" + Style.RESET_ALL,
+            Fore.LIGHTYELLOW_EX + "Pupil" + Style.RESET_ALL,
             Fore.LIGHTYELLOW_EX + "Phone" + Style.RESET_ALL,
             Fore.LIGHTYELLOW_EX + "Email" + Style.RESET_ALL,
             Fore.LIGHTYELLOW_EX + "Address" + Style.RESET_ALL,
@@ -218,4 +218,4 @@ def search_pupil(list: Pupils) -> str:
         validate=validators.validators.RequiredValidator,
     ).ask()
 
-    return list.search_pupils_list(search_input)
+    return list.search_pupils(search_input)
