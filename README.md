@@ -22,6 +22,19 @@ Get ready to embrace the magic of Hogwarts with the **Hogwarts Assistant Bot**! 
 To start the Hogwarts Assistant Bot locally:
 python -m hogwarts.main
 
+To work on the Hogwarts Assistanst and push new versions to PyPI, follow these steps:
+
+1. **Update the Version**
+   Before pushing a new version, ensure you update the version number in the `setup.py` file. This is crucial for PyPI to recognize the new version. For example:
+
+   version='1.0.1'
+
+2. **New build**
+   python setup.py sdist bdist_wheel
+3. **Upload to PyPI**
+   pip install twine
+   twine upload dist/\*
+
 ## 📜 Commands
 
 Inside the Hogwarts Assistant Bot, you can use the following commands:
@@ -62,3 +75,7 @@ Inside the Hogwarts Assistant Bot, you can use the following commands:
 ## Installation
 
 To install the Hogwarts module, use the following command:
+
+```bash
+pip install hogwarts_assistant
+```
