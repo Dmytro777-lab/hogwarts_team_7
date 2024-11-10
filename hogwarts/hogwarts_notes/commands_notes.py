@@ -4,7 +4,7 @@ from colorama import Fore, Style
 import validators
 from helpers import input_error, NotesError
 from hogwarts_notes import Notes, NoteRecord
-from hogwarts_notes.search import SearchBy
+from hogwarts_notes.search import SearchBy, SortBy, SortOrder
 
 
 @input_error
@@ -116,3 +116,24 @@ def show_notes(notes_list: Notes):
         raise NotesError(Fore.RED + "There are no notes." + Style.RESET_ALL)
 
     return notes_list.list_notes()
+
+
+@input_error
+def sort_notes(notes_list: Notes):
+    if notes_list.is_empty():
+        raise NotesError(Fore.RED + "No notes be found" + Style.RESET_ALL)
+
+    sort_by = questionary.select(
+        "Please specify a sort type:",
+        choices=[sort.value for sort in SortBy],
+    ).ask()
+
+    sort_order = None
+
+    if sort_by is not SortBy.TAGS.value:
+        sort_order = questionary.select(
+            "Please specify a sort order:",
+            choices=[sort.value for sort in SortOrder],
+        ).ask()
+
+    return notes_list.sort_notes(sort_by, sort_order)

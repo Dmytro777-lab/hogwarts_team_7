@@ -3,6 +3,7 @@ from .note import NoteRecord
 from colorama import Fore, Style
 from rapidfuzz import process
 from tabulate import tabulate
+from .search import SortOrder, SortBy
 
 
 class Notes(UserDict):
@@ -54,3 +55,30 @@ class Notes(UserDict):
                 )
             else:
                 return Fore.RED + "No matches found for that query." + Style.RESET_ALL
+
+    def sort_notes(self, sort_by: str, sort_order: SortOrder = None) -> str:
+        # Sort by creation date
+        if sort_by == SortBy.CREATED_AT.value:
+            sorted_records = sorted(
+                self.data.values(),
+                key=lambda x: x.created_at,
+                reverse=sort_order == SortOrder.DESC.value,
+            )
+
+        # Sort by last modified date (or by creation date if the note was never modified)
+        elif sort_by == SortBy.MODIFIED_AT.value:
+            sorted_records = sorted(
+                self.data.values(),
+                key=lambda x: x.modified_at or x.created_at,
+                reverse=sort_order == SortOrder.DESC.value,
+            )
+
+        # Format and return the sorted notes
+        return (
+            Fore.CYAN
+            + f"Sorted notes by '{sort_by}'"
+            + (f" in '{str(sort_order)}' order" if sort_order else "")
+            + ":\n"
+            + "\n\n".join([str(note) for note in sorted_records])
+            + Style.RESET_ALL
+        )
