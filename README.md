@@ -61,4 +61,4 @@ Inside the Hogwarts Assistant Bot, you can use the following commands:
 
 ## Installation
 
-To install the Pirate Ledger module, use the following command:
+To install the Hogwarts module, use the following command:
