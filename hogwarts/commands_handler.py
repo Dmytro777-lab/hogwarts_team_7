@@ -116,6 +116,8 @@ def listen_commands(book, notes, on_exit: callable):
                     print(search_notes(notes))
                 case Commands.SORT_NOTE:
                     print(sort_notes(notes))
+                case Commands.ADD_NOTE_TAG:
+                    print(add_tag(notes))
 
                 # Invalid command: prompts the user to try again
                 case _:

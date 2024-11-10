@@ -2,4 +2,4 @@
 
 Master of Sience Final Project
 
-start : python3 -m main
+start : python3 -m hogwarts.main
