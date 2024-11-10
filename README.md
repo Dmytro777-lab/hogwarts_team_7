@@ -10,14 +10,10 @@ Welcome to the Hogwarts Assistant Bot – your magical tool for managing pupils 
 Inside the Hogwarts Assistant Bot, you can use the following commands:
 
 ✨ General Commands
-Command | Description
-`exit` | Exit the application.
-`help` | Display the list of available commands.
-`close`| Close the application.
-`hello`| Greet the assistant.
 
-| Таблицы      |        Это         | Круто |
-| ------------ | :----------------: | ----: |
-| столбец 3    |  выровнен вправо   | $1600 |
-| столбец 2    | выровнен по центру |   $12 |
-| зебра-строки |     прикольные     |    $1 |
+| Command |               Description               |
+| ------- | :-------------------------------------: |
+| `exit`  |          Exit the application.          |
+| `close` | Display the list of available commands. |
+| `close` |         Close the application.          |
+| `hello` |          Greet the assistant.           |
