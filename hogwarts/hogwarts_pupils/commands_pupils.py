@@ -2,10 +2,9 @@ import questionary
 from tabulate import tabulate
 from colorama import Fore, Style, init
 
-import validators
+from ..validators import validators, ask_name
 from .hogwarts_pupils import Pupils, Pupil
-from helpers import ContactsError, input_error
-import validators.ask_name
+from ..helpers import ContactsError, input_error
 
 init()
 
@@ -14,7 +13,7 @@ init()
 def add_pupil(list: Pupils):
     name = questionary.text(
         "Enter the name of the pupil:",
-        validate=validators.validators.RequiredValidator,
+        validate=validators.RequiredValidator,
     ).ask()
     message = Fore.LIGHTGREEN_EX + "New pupil added." + Style.RESET_ALL
     contact = list.find(name)
@@ -38,15 +37,15 @@ def add_pupil(list: Pupils):
         address=questionary.text("[Optional] Enter address:"),
         phone=questionary.text(
             "[Optional] Enter phone number:",
-            validate=validators.validators.PhoneValidator,
+            validate=validators.PhoneValidator,
         ),
         email=questionary.text(
             "[Optional] Enter email address:",
-            validate=validators.validators.EmailValidator,
+            validate=validators.EmailValidator,
         ),
         birthday=questionary.text(
             "[Optional] Enter birthday (DD.MM.YYYY):",
-            validate=validators.validators.DateValidator,
+            validate=validators.DateValidator,
         ),
     )
     fields = form.ask()
@@ -60,7 +59,7 @@ def add_pupil(list: Pupils):
 
 @input_error
 def update_pupil(list: Pupils) -> str:
-    name = validators.ask_name.ask_contact_name(list)
+    name = ask_name.ask_contact_name(list)
     record = list.find(name)
     if record is None:
         raise ContactsError(Fore.RED + "This pupil does not exist." + Style.RESET_ALL)
@@ -71,7 +70,7 @@ def update_pupil(list: Pupils) -> str:
     if hasattr(record, field):
         new_value = questionary.text(
             f"Enter the new value for {field}:",
-            validate=validators.validators.RequiredValidator,
+            validate=validators.RequiredValidator,
         ).ask()
         setattr(record, field, new_value)
 
@@ -90,7 +89,7 @@ def update_pupil(list: Pupils) -> str:
 
 @input_error
 def delete_pupil(list: Pupils) -> str:
-    name = validators.ask_name.ask_contact_name(list)
+    name = ask_name.ask_contact_name(list)
     record = list.find(name)
 
     if record is None:
@@ -172,7 +171,7 @@ def pupils_birthdays(list: Pupils) -> str:
         delta_days = int(
             questionary.text(
                 "How many days ahead would you like to check for upcoming birthdays?",
-                validate=validators.validators.NumberValidation,
+                validate=validators.NumberValidation,
             ).ask()
         )
         birthdays_list = list.get_upcoming_birthdays(delta_days)
@@ -215,7 +214,7 @@ def search_pupil(list: Pupils) -> str:
 
     search_input = questionary.text(
         "Enter the search term:",
-        validate=validators.validators.RequiredValidator,
+        validate=validators.RequiredValidator,
     ).ask()
 
     return list.search_pupils(search_input)

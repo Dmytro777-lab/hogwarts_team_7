@@ -2,8 +2,8 @@ from enum import Enum
 from colorama import Fore, Style
 import questionary
 
-from hogwarts_pupils import *
-from hogwarts_notes import *
+from .hogwarts_pupils import *
+from .hogwarts_notes import *
 
 
 # Enum class to define all available commands

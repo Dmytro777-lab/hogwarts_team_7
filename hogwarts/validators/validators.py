@@ -1,6 +1,6 @@
 from prompt_toolkit.document import Document
 from questionary import Validator, ValidationError
-from hogwarts_pupils import Phone, Email, Birthday
+from ..hogwarts_pupils import Phone, Email, Birthday
 import re
 
 

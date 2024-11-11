@@ -1,10 +1,10 @@
 import questionary
 from colorama import Fore, Style
 
-import validators
-from helpers import input_error, NotesError
-from hogwarts_notes import Notes, NoteRecord
-from hogwarts_notes.search import SearchBy, SortBy, SortOrder
+from ..validators import validators
+from ..helpers import input_error, NotesError
+from ..hogwarts_notes import Notes, NoteRecord
+from ..hogwarts_notes.search import SearchBy, SortBy, SortOrder
 
 
 @input_error
@@ -12,7 +12,7 @@ def add_note(notes_list: Notes):
     while True:
         title = questionary.text(
             "What is the title for your note?",
-            validate=validators.validators.RequiredValidator,
+            validate=validators.RequiredValidator,
         ).ask()
 
         if notes_list.find(title):
@@ -26,7 +26,7 @@ def add_note(notes_list: Notes):
 
     content = questionary.text(
         "What is the content for your note?",
-        validate=validators.validators.RequiredValidator,
+        validate=validators.RequiredValidator,
     ).ask()
 
     record = NoteRecord(title, content)
@@ -43,7 +43,7 @@ def delete_note(notes_list: Notes):
     title = questionary.autocomplete(
         "What is the title of the note you wish to delete?",
         choices=[*notes_list.keys()],
-        validate=validators.validators.RequiredValidator,
+        validate=validators.RequiredValidator,
     ).ask()
 
     record = notes_list.find(title)
@@ -65,7 +65,7 @@ def update_note(notes_list: Notes):
     title = questionary.autocomplete(
         "What is the title of the note you wish to update?",
         choices=[*notes_list.keys()],
-        validate=validators.validators.RequiredValidator,
+        validate=validators.RequiredValidator,
     ).ask()
     record = notes_list.find(title)
 
@@ -77,13 +77,13 @@ def update_note(notes_list: Notes):
     new_title = questionary.text(
         f"Enter the new title (current: {record.note.title}):",
         default=record.note.title,
-        validate=validators.validators.RequiredValidator,
+        validate=validators.RequiredValidator,
     ).ask()
 
     new_content = questionary.text(
         f"Enter the new content (current: {record.note.content}):",
         default=record.note.content,
-        validate=validators.validators.RequiredValidator,
+        validate=validators.RequiredValidator,
     ).ask()
 
     record.note.edit(new_title, new_content)
@@ -107,14 +107,14 @@ def search_notes(notes_list: Notes):
         query = questionary.autocomplete(
             "Please enter the note title:",
             choices=[*notes_list.keys()],
-            validate=validators.validators.RequiredValidator,
+            validate=validators.RequiredValidator,
         ).ask()
 
         return notes_list.list_notes(query)
     else:
         query = questionary.text(
             "Please enter the tag name:",
-            validate=validators.validators.RequiredValidator,
+            validate=validators.RequiredValidator,
         ).ask()
 
         return notes_list.list_notes(query, by_tags=True)
@@ -159,7 +159,7 @@ def add_tag(notes_list: Notes):
     title = questionary.autocomplete(
         "Please enter the note title:",
         choices=[*notes_list.keys()],
-        validate=validators.validators.RequiredValidator,
+        validate=validators.RequiredValidator,
     ).ask()
 
     record = notes_list.find(title)
@@ -171,7 +171,7 @@ def add_tag(notes_list: Notes):
 
     while True:
         new_tag = questionary.text(
-            f"Enter a new tag:", validate=validators.validators.RequiredValidator
+            f"Enter a new tag:", validate=validators.RequiredValidator
         ).ask()
 
         if record.has_tag(new_tag):
