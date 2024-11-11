@@ -94,9 +94,7 @@ def update_note(notes_list: Notes):
 @input_error
 def search_notes(notes_list: Notes):
     if notes_list.is_empty():
-        raise NotesError(
-            Fore.RED + "Arrr, no notes be found in the captain's log!" + Style.RESET_ALL
-        )
+        raise NotesError(Fore.RED + "No notes be found " + Style.RESET_ALL)
 
     search_by = questionary.select(
         "Please specify a search type:",
@@ -152,9 +150,7 @@ def sort_notes(notes_list: Notes):
 @input_error
 def add_tag(notes_list: Notes):
     if notes_list.is_empty():
-        raise NotesError(
-            Fore.RED + "Arrr, no notes be found in the captain's log!" + Style.RESET_ALL
-        )
+        raise NotesError(Fore.RED + "No notes be found" + Style.RESET_ALL)
 
     title = questionary.autocomplete(
         "Please enter the note title:",
